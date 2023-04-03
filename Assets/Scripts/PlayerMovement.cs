@@ -71,4 +71,9 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
         }
     }
+
+    public Vector3 GetVelocity()
+    {
+        return moveDirection;
+    }
 }
