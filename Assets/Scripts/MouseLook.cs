@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private float mouseSensitivity=100f;
+    [SerializeField] private Transform playerBody;
+    [SerializeField] private bool isInvert = false;
+
+    float mouseX, mouseY, invertMultiplier, xRotation=0f;
+
     void Start()
     {
-        
+        invertMultiplier = isInvert ? 1 : -1;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        mouseX = Input.GetAxis("Mouse X") * mouseSensitivity*Time.deltaTime;
+        mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+        xRotation += (mouseY * invertMultiplier);
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+        transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        playerBody.Rotate(Vector3.up * mouseX);
     }
 }
